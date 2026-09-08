@@ -4,7 +4,7 @@
 
 ## Pages
 
-- [bananana](https://bananana.example.com/): The whole site. Click or tap anywhere and banana emoji fall from the top of the screen, spinning and drifting down, for a few seconds before disappearing.
+- [bananana](https://sngr-ai.github.io/bananana/): The whole site. Click or tap anywhere and banana emoji fall from the top of the screen, spinning and drifting down, for a few seconds before disappearing.
 
 ## Notes
 
