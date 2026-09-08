@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bananana</title>
+<meta name="description" content="Bananana is a playful one-page website: click or tap anywhere on the screen and watch a shower of banana emoji rain down.">
+<link rel="canonical" href="https://bananana.example.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="bananana">
+<meta property="og:description" content="Click or tap anywhere and watch a shower of banana emoji rain down the screen.">
+<meta property="og:url" content="https://bananana.example.com/">
+<meta property="og:site_name" content="bananana">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bananana">
+<meta name="twitter:description" content="Click or tap anywhere and watch a shower of banana emoji rain down the screen.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "bananana",
+  "url": "https://bananana.example.com/",
+  "description": "A one-page website where every click or tap makes it rain banana emoji across the screen.",
+  "applicationCategory": "EntertainmentApplication",
+  "operatingSystem": "Any (runs in a web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true
+}
+</script>
+<style>
+  :root{
+    --bg-top:#fff6d8;
+    --bg-bottom:#ffe08a;
+    --text:#3d2b00;
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom));
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    cursor:pointer;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .wrap{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    z-index:2;
+  }
+  h1{
+    font-size:clamp(3rem,12vw,8rem);
+    margin:0;
+    color:var(--text);
+    letter-spacing:2px;
+    text-shadow:2px 2px 0 rgba(255,255,255,0.5);
+    animation:wiggle 3s ease-in-out infinite;
+  }
+  p{
+    margin-top:0.5rem;
+    font-size:clamp(0.9rem,2.5vw,1.3rem);
+    color:var(--text);
+    opacity:0.75;
+  }
+  @keyframes wiggle{
+    0%,100%{ transform:rotate(-2deg); }
+    50%{ transform:rotate(2deg); }
+  }
+  .banana{
+    position:fixed;
+    top:-60px;
+    font-size:2.5rem;
+    pointer-events:none;
+    will-change:transform,top;
+    z-index:1;
+    user-select:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    h1{ animation:none; }
+  }
+  .desc{ font-size:0.8rem; opacity:0.55; margin-top:0.75rem; max-width:26rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>bananana</h1>
+    <p>click anywhere and let it rain</p>
+    <p class="desc">Bananana is a playful one-page website. Click or tap anywhere on the screen and it rains banana emoji.</p>
+  </div>
+
+<script>
+(function(){
+  var body = document.body;
+  var vh = window.innerHeight;
+
+  function random(min, max){
+    return Math.random() * (max - min) + min;
+  }
+
+  function spawnBanana(x){
+    var el = document.createElement('div');
+    el.className = 'banana';
+    el.textContent = '🍌';
+
+    var startX = (typeof x === 'number') ? x : random(0, window.innerWidth);
+    var drift = random(-120, 120);
+    var duration = random(1.6, 3.2);
+    var size = random(1.6, 3.2);
+    var spin = random(-540, 540);
+    var delay = random(0, 0.15);
+
+    el.style.left = startX + 'px';
+    el.style.fontSize = size + 'rem';
+
+    body.appendChild(el);
+
+    var frames = [
+      { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+      { transform: 'translate(' + drift + 'px, ' + (vh + 150) + 'px) rotate(' + spin + 'deg)', opacity: 1 }
+    ];
+
+    var anim = el.animate(frames, {
+      duration: duration * 1000,
+      delay: delay * 1000,
+      easing: 'cubic-bezier(0.4, 0.0, 1, 1)',
+      fill: 'forwards'
+    });
+
+    anim.onfinish = function(){
+      el.remove();
+    };
+  }
+
+  function spawnBurst(x, count){
+    for (var i = 0; i < count; i++){
+      (function(i){
+        setTimeout(function(){
+          spawnBanana(x + random(-40, 40));
+        }, i * 30);
+      })(i);
+    }
+  }
+
+  window.addEventListener('resize', function(){
+    vh = window.innerHeight;
+  });
+
+  document.addEventListener('click', function(e){
+    spawnBurst(e.clientX, 14);
+  });
+
+  document.addEventListener('touchstart', function(e){
+    if (e.touches && e.touches.length){
+      spawnBurst(e.touches[0].clientX, 14);
+    }
+  }, { passive: true });
+
+  // A little welcome shower on load
+  window.addEventListener('load', function(){
+    for (var i = 0; i < 20; i++){
+      (function(i){
+        setTimeout(function(){
+          spawnBanana();
+        }, i * 80);
+      })(i);
+    }
+  });
+})();
+</script>
+</body>
+</html>

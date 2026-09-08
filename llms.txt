@@ -1,0 +1,12 @@
+# bananana
+
+> A one-page website where every click or tap makes it rain banana emoji across the screen. Purely for fun, no signup, no backend.
+
+## Pages
+
+- [bananana](https://bananana.example.com/): The whole site. Click or tap anywhere and banana emoji fall from the top of the screen, spinning and drifting down, for a few seconds before disappearing.
+
+## Notes
+
+- Single static HTML page, no login, no data collection.
+- Interaction: any click or tap triggers a burst of animated banana emoji.
